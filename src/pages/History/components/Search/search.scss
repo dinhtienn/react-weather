@@ -1,0 +1,11 @@
+.history-search {
+  &__input {
+    display: flex;
+    gap: 1rem;
+  }
+
+  &__error {
+    color: var(--color-danger);
+    margin-top: 6px;
+  }
+}

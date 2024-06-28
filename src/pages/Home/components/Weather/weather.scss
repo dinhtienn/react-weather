@@ -1,0 +1,79 @@
+.weather {
+  &__status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    &__condition {
+      height: 120px;
+    }
+
+    &__temperature {
+      &__detail {
+        font-size: 2.5rem;
+        line-height: 1;
+        position: relative;
+
+        &::before {
+          content: 'o';
+          position: absolute;
+          font-size: 1.6rem;
+          top: -2px;
+          left: 3rem;
+        }
+
+        &::after {
+          content: 'C';
+          position: absolute;
+          margin-left: 1.4rem;
+        }
+      }
+
+      &__description {
+        font-size: 1.2rem;
+
+        @media screen and (max-width: 400px) {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  &__more {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    text-align: center;
+
+    &__info {
+      &__label {
+        color: var(--color-gray);
+      }
+
+      &__detail {
+        font-weight: 600;
+
+        &::after {
+          font-size: 0.8rem;
+          margin-left: 4px;
+          position: relative;
+          top: -1px;
+        }
+
+        &.humidity::after {
+          content: '%';
+        }
+
+        &.wind::after {
+          content: 'm/s';
+        }
+
+        &.visibility::after {
+          content: 'km';
+        }
+      }
+    }
+  }
+}

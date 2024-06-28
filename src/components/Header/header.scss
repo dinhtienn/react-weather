@@ -1,0 +1,82 @@
+.app-header {
+  background-color: var(--color-white);
+  display: flex;
+  justify-content: center;
+  padding: var(--page-padding);
+  position: relative;
+  align-items: center;
+
+  @media screen and (max-width: 820px) {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__brand {
+    width: calc(100% - 36px);
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--page-padding);
+
+    @media screen and (max-width: 820px) {
+      position: relative;
+      width: 100%;
+    }
+
+    &__logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--color-black);
+
+      img {
+        height: 2.4rem;
+      }
+
+      span {
+        position: relative;
+        top: 2px;
+      }
+    }
+  }
+
+  &__location {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-black);
+    position: relative;
+    width: var(--main-width);
+    max-width: var(--main-max-width);
+
+    @media screen and (max-width: 820px) {
+      width: 100%;
+      max-width: none;
+    }
+
+    &__icon {
+      height: 1.6rem;
+
+      &.location {
+        position: absolute;
+        left: -1.8rem;
+        top: 4px;
+
+        @media screen and (max-width: 820px) {
+          display: none;
+        }
+      }
+    }
+
+    &__text {
+      border: 0;
+      outline: 0;
+      padding: 8px 8px 4px 4px;
+      font-size: 1rem;
+    }
+  }
+}

@@ -1,0 +1,27 @@
+.history-list {
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 24px var(--page-padding) !important;
+
+    &-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &__actions {
+        display: flex;
+        gap: 12px;
+
+        img {
+          height: 1.4rem;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
