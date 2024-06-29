@@ -2,12 +2,20 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchWeather } from '../../../../services';
 import { WeatherType } from '../../../../types';
+import { LIST_HISTORY_STORAGE_KEY } from '../../../../utils/constants';
 import useAppStore from '../../../../stores';
+import secureLocalStorage from 'react-secure-storage';
 import './search.scss';
 
 export default function Search() {
   const navigate = useNavigate();
-  const { setWeatherData, setWeatherLoading, setLocation } = useAppStore();
+  const {
+    setWeatherData,
+    setWeatherLoading,
+    setLocation,
+    history,
+    setHistory,
+  } = useAppStore();
   const [search, setSearch] = useState<string>('');
   const [message, setMessage] = useState<string>('');
 
@@ -32,11 +40,28 @@ export default function Search() {
     if (data.cod === 200) {
       setWeatherData(data);
       setLocation(data.name);
+      await handleHistory(data.name);
     } else if (data.cod === 500) setMessage('Internal server error');
     else setMessage('Invalid country or city');
 
     setWeatherLoading(false);
     if (data.cod === 200) navigate('/');
+  };
+
+  const handleHistory = (location: string) => {
+    const historyClone = [...history];
+    if (!history.length) {
+      setHistory([location]);
+      secureLocalStorage.setItem(LIST_HISTORY_STORAGE_KEY, [location]);
+      return;
+    }
+    const index = history.indexOf(location);
+    if (index > -1) {
+      historyClone.splice(index, 1);
+    }
+    historyClone.unshift(location);
+    setHistory(historyClone);
+    secureLocalStorage.setItem(LIST_HISTORY_STORAGE_KEY, historyClone);
   };
 
   return (

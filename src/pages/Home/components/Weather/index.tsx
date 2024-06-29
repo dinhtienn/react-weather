@@ -25,7 +25,7 @@ export default function Weather() {
   useEffect(() => {
     if (location && !weatherData) handleFetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [location]);
 
   return (
     <div className='weather card'>

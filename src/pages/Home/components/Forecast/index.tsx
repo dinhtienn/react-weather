@@ -27,7 +27,7 @@ export default function Forecast() {
     if (location && (!forecastData || forecastData.name !== location))
       handleFetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [location]);
 
   return (
     <div className='forecast card'>

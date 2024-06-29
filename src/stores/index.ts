@@ -9,19 +9,22 @@ interface appState {
   forecastLoading: boolean;
   weatherData: any;
   forecastData: any;
+  history: any;
   setLocation: (value: string) => void;
   setWeatherLoading: (value: boolean) => void;
   setForecastLoading: (value: boolean) => void;
   setWeatherData: (value: any) => void;
   setForecastData: (value: any) => void;
+  setHistory: (value: any) => void;
 }
 
 const appStore = (set: any) => ({
-  location: 'Singapore, SG',
+  location: '',
   weatherLoading: false,
   forecastLoading: false,
   weatherData: null,
   forecastData: null,
+  history: [],
   setLocation: (value: string) => {
     set(() => ({
       location: value,
@@ -45,6 +48,11 @@ const appStore = (set: any) => ({
   setForecastData: (value: any) => {
     set(() => ({
       forecastData: value,
+    }));
+  },
+  setHistory: (value: any) => {
+    set(() => ({
+      history: value,
     }));
   },
 });
