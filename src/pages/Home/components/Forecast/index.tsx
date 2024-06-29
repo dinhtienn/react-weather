@@ -3,33 +3,42 @@ import { useEffect } from 'react';
 import { fetchWeather } from '../../../../services';
 import { WeatherType } from '../../../../types';
 import { getListDateForecast } from '../../../../utils/helpers';
+import Loading from '../../../../components/Loading';
 import useAppStore from '../../../../stores';
 import './forecast.scss';
 
 export default function Forecast() {
-  const { location, forecastData, setForecastData, setForecastLoading } =
-    useAppStore();
+  const {
+    location,
+    forecastData,
+    forecastLoading,
+    setForecastData,
+    setForecastLoading,
+  } = useAppStore();
 
   const handleFetchData = async () => {
     setForecastLoading(true);
     const data = await fetchWeather(location, WeatherType.FORECAST);
-    if (data.cod === 200) setForecastData(data.data);
+    if (data.cod === 200) setForecastData(data);
     setForecastLoading(false);
   };
 
   useEffect(() => {
-    if (location && !forecastData) handleFetchData();
+    if (location && (!forecastData || forecastData.name !== location))
+      handleFetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className='forecast card'>
-      {forecastData ? (
+      {forecastLoading ? (
+        <Loading />
+      ) : forecastData ? (
         getListDateForecast().map((item: string, index: number) => (
           <div className='forecast-item' key={index}>
             <p className='forecast-item__date'>{item}</p>
             <div className='forecast-item__content'>
-              {forecastData[item].map((it: any, index: number) => (
+              {forecastData.data[item].map((it: any, index: number) => (
                 <div className='forecast-item__content-item' key={index}>
                   <div className='forecast-item__content-item__time'>
                     {it.time}

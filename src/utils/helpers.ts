@@ -46,11 +46,11 @@ export const processForecast = (forecastData: any) => {
     const datetime: Date = new Date((item.dt + timezone + offset) * 1000);
     const date = `${listMonths[datetime.getMonth()]} ${datetime.getDate()}`;
     const hours =
-      datetime.getHours() > 10
+      datetime.getHours() >= 10
         ? datetime.getHours()
         : `0${datetime.getHours()}`;
     const minutes =
-      datetime.getMinutes() > 10
+      datetime.getMinutes() >= 10
         ? datetime.getMinutes()
         : `0${datetime.getMinutes()}`;
     const time = `${hours}:${minutes}`;
@@ -67,6 +67,7 @@ export const processForecast = (forecastData: any) => {
 
   return {
     cod: 200,
+    name: `${forecastData.city.name}, ${forecastData.city.country}`,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data: groupBy(dataFormatted, (data: any) => data.date),
   };

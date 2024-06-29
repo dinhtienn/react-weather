@@ -1,4 +1,6 @@
 .weather {
+  position: relative;
+
   &__status {
     display: flex;
     justify-content: center;

@@ -2,6 +2,7 @@
   font-size: 14px;
   max-height: 52vh;
   overflow: auto;
+  position: relative;
 
   @media screen and (max-width: 575px) {
     max-height: 46vh;

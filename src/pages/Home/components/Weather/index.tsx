@@ -2,12 +2,18 @@ import { useEffect } from 'react';
 import { fetchWeather } from '../../../../services';
 import { WeatherType } from '../../../../types';
 import { formatDateTime } from '../../../../utils/helpers';
+import Loading from '../../../../components/Loading';
 import useAppStore from '../../../../stores';
 import './weather.scss';
 
 export default function Weather() {
-  const { location, weatherData, setWeatherData, setWeatherLoading } =
-    useAppStore();
+  const {
+    location,
+    weatherData,
+    weatherLoading,
+    setWeatherData,
+    setWeatherLoading,
+  } = useAppStore();
 
   const handleFetchData = async () => {
     setWeatherLoading(true);
@@ -24,7 +30,9 @@ export default function Weather() {
   return (
     <div className='weather card'>
       <p className='weather__date'>{formatDateTime(new Date())}</p>
-      {weatherData ? (
+      {weatherLoading ? (
+        <Loading />
+      ) : weatherData ? (
         <>
           <div className='weather__status'>
             {weatherData?.icon ? (
