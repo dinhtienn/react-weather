@@ -12,7 +12,8 @@ interface appState {
   setLocation: (value: string) => void;
   setWeatherLoading: (value: boolean) => void;
   setForecastLoading: (value: boolean) => void;
-  setWeatherData: (value: string) => void;
+  setWeatherData: (value: any) => void;
+  setForecastData: (value: any) => void;
 }
 
 const appStore = (set: any) => ({
@@ -39,6 +40,11 @@ const appStore = (set: any) => ({
   setWeatherData: (value: any) => {
     set(() => ({
       weatherData: value,
+    }));
+  },
+  setForecastData: (value: any) => {
+    set(() => ({
+      forecastData: value,
     }));
   },
 });

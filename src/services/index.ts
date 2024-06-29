@@ -1,6 +1,6 @@
 import { API_KEY } from '../utils/constants';
 import { WeatherType } from '../types';
-import { processWeather } from '../utils/helpers';
+import { processForecast, processWeather } from '../utils/helpers';
 
 export const fetchWeather = async (search: string, type: WeatherType) => {
   try {
@@ -9,7 +9,10 @@ export const fetchWeather = async (search: string, type: WeatherType) => {
     );
     const data = await response.json();
 
-    if (data.cod === 200) return processWeather(data);
+    if (Number(data.cod) === 200)
+      return type === WeatherType.WEATHER
+        ? processWeather(data)
+        : processForecast(data);
 
     return data;
   } catch (error) {
