@@ -16,7 +16,15 @@ export default function Search() {
     if (message) setMessage('');
   };
 
+  const onInputKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' || event.keyCode === 13) onSearch();
+  };
+
   const onSearch = async () => {
+    if (!search) {
+      setMessage('Please enter country or city');
+      return;
+    }
     setWeatherLoading(true);
 
     const data = await fetchWeather(search, WeatherType.WEATHER);
@@ -39,6 +47,7 @@ export default function Search() {
           placeholder='Search country or city here...'
           value={search}
           onChange={onInputChange}
+          onKeyUp={onInputKeyUp}
         />
         <button className='btn-primary' onClick={onSearch}>
           Search
