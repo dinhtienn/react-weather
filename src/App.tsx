@@ -17,8 +17,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (history.length && !location) {
-      setLocation(history[0]);
+    if (!location) {
+      setLocation(history.length ? history[0] : 'Singapore, SG');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history]);
