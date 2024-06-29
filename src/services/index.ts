@@ -1,12 +1,10 @@
-import { API_KEY } from '../utils/constants';
 import { WeatherType } from '../types';
 import { processForecast, processWeather } from '../utils/helpers';
+import { API_URL } from '../utils/constants';
 
 export const fetchWeather = async (search: string, type: WeatherType) => {
   try {
-    const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/${type}?q=${search}&appid=${API_KEY}&units=metric`
-    );
+    const response = await fetch(`${API_URL}/api/${type}?q=${search}`);
     const data = await response.json();
 
     if (Number(data.cod) === 200)
