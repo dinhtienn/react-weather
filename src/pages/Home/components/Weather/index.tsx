@@ -1,36 +1,74 @@
+import { useEffect } from 'react';
+import { fetchWeather } from '../../../../services';
+import { WeatherType } from '../../../../types';
+import { formatDateTime } from '../../../../utils/helpers';
+import useAppStore from '../../../../stores';
 import './weather.scss';
 
 export default function Weather() {
+  const { location, weatherData, setWeatherData, setWeatherLoading } =
+    useAppStore();
+
+  const handleFetchData = async () => {
+    setWeatherLoading(true);
+    const data = await fetchWeather(location, WeatherType.WEATHER);
+    if (data.cod === 200) setWeatherData(data);
+    setWeatherLoading(false);
+  };
+
+  useEffect(() => {
+    if (location && !weatherData) handleFetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className='weather card'>
-      <p className='weather__date'>January 24, 2024</p>
-      <div className='weather__status'>
-        <img
-          className='weather__status__condition'
-          src='https://openweathermap.org/img/wn/10d@2x.png'
-          alt='Current status'
-        />
-        <div className='weather__status__temperature'>
-          <p className='weather__status__temperature__detail'>26</p>
-          <p className='weather__status__temperature__description'>
-            Broken Clouds
-          </p>
-        </div>
-      </div>
-      <div className='weather__more'>
-        <div className='weather__more__info'>
-          <p className='weather__more__info__label'>Humidity</p>
-          <p className='weather__more__info__detail humidity'>96</p>
-        </div>
-        <div className='weather__more__info'>
-          <p className='weather__more__info__label'>Winds</p>
-          <p className='weather__more__info__detail wind'>1.54</p>
-        </div>
-        <div className='weather__more__info'>
-          <p className='weather__more__info__label'>Visibility</p>
-          <p className='weather__more__info__detail visibility'>8</p>
-        </div>
-      </div>
+      <p className='weather__date'>{formatDateTime(new Date())}</p>
+      {weatherData ? (
+        <>
+          <div className='weather__status'>
+            {weatherData?.icon ? (
+              <img
+                className='weather__status__condition'
+                src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
+                alt={weatherData?.description}
+              />
+            ) : (
+              <></>
+            )}
+            <div className='weather__status__temperature'>
+              <p className='weather__status__temperature__detail'>
+                {weatherData?.temp}
+              </p>
+              <p className='weather__status__temperature__description'>
+                {weatherData?.description}
+              </p>
+            </div>
+          </div>
+          <div className='weather__more'>
+            <div className='weather__more__info'>
+              <p className='weather__more__info__label'>Humidity</p>
+              <p className='weather__more__info__detail humidity'>
+                {weatherData?.humidity}
+              </p>
+            </div>
+            <div className='weather__more__info'>
+              <p className='weather__more__info__label'>Winds</p>
+              <p className='weather__more__info__detail wind'>
+                {weatherData?.winds}
+              </p>
+            </div>
+            <div className='weather__more__info'>
+              <p className='weather__more__info__label'>Visibility</p>
+              <p className='weather__more__info__detail visibility'>
+                {weatherData?.visibility}
+              </p>
+            </div>
+          </div>
+        </>
+      ) : (
+        <p className='empty-text'>No data</p>
+      )}
     </div>
   );
 }

@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom';
+import useAppStore from '../../stores';
 import appLogo from '/icon-cloud.svg';
 import iconLocation from '../../assets/images/icon-location.svg';
 import iconSearch from '../../assets/images/icon-search.svg';
 import './header.scss';
 
 export default function Header() {
+  const { location } = useAppStore();
+
   return (
     <header className='app-header'>
       <div className='app-header__brand'>
@@ -20,7 +23,7 @@ export default function Header() {
           className='app-header__location__icon location'
           alt='Location'
         />
-        <p className='app-header__location__text'>Singapore, SG</p>
+        <p className='app-header__location__text'>{location || ''}</p>
         <img
           src={iconSearch}
           className='app-header__location__icon search'
