@@ -38,7 +38,7 @@ export default function Forecast() {
           <div className='forecast-item' key={index}>
             <p className='forecast-item__date'>{item}</p>
             <div className='forecast-item__content'>
-              {forecastData.data[item].map((it: any, index: number) => (
+              {forecastData.data[item]?.map((it: any, index: number) => (
                 <div className='forecast-item__content-item' key={index}>
                   <div className='forecast-item__content-item__time'>
                     {it.time}
